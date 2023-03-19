@@ -23,7 +23,7 @@ const CatalogPage: React.FC<CatalogPageProps> = ({ colorScheme }) => {
 
   useEffect(() => {
     const fetchItems = async () => {
-      // Replace this with your actual API call
+      // Still need to replace this with an actual API call (firebase maybe ?)
       const fetchedItems: Item[] = generateMockItems(10); // Generates 10 mock items
       setItems(fetchedItems);
     };
