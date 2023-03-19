@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Provider } from 'react-redux';
 import Store from './src/Store/Store';
-import LoginPage from './src/Pages/LoginPage';
+import AppNavigator from './src/Navigation/AppNavigator';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 function App(): JSX.Element {
   const [colorScheme, setColorScheme] = useState<'light' | 'dark'>('light');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+
+  // Handle user state changes
+  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
+    setUser(user);
+    if (loading) {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
   const toggleColorScheme = () => {
     setColorScheme(colorScheme === 'light' ? 'dark' : 'light');
@@ -13,13 +29,13 @@ function App(): JSX.Element {
 
   return (
     <Provider store={Store}>
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
-      <LoginPage colorScheme={colorScheme} />
-      <TouchableOpacity style={styles.toggleButton} onPress={toggleColorScheme}>
-        <Text style={styles.toggleButtonText}>Toggle {colorScheme === 'light' ? 'Dark' : 'Light'} Mode</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
+        <AppNavigator colorScheme={colorScheme} />
+        <TouchableOpacity style={styles.toggleButton} onPress={toggleColorScheme}>
+          <Text style={styles.toggleButtonText}>Toggle {colorScheme === 'light' ? 'Dark' : 'Light'} Mode</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
     </Provider>
   );
 }

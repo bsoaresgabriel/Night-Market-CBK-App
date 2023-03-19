@@ -16,8 +16,8 @@ export const CartSlice = createSlice({
     addItem: (state, action: PayloadAction<Item>) => {
       state.items.push(action.payload);
     },
-    removeItem: (state, action: PayloadAction<number>) => {
-      state.items.splice(action.payload, 1);
+    removeItem: (state, action: PayloadAction<string>) => {
+      state.items = state.items.filter(item => item.id !== action.payload);
     },
   },
 });

@@ -8,29 +8,30 @@ import {
   useColorScheme,
 } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../Navigation/AppNavigator'; 
+import { RootStackParamList } from '../Navigation/AppNavigator';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-export type LoginPageProps = {
-  colorScheme: 'light' | 'dark';
-};
+export type SignUpPageProps = {
+    colorScheme: 'light' | 'dark';
+  };
 
-const LoginPage: React.FC<LoginPageProps> = ({ colorScheme }) => {
+const SignUpPage: React.FC<SignUpPageProps> = ({ colorScheme }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'SignUpPage'>>();
 
-  const handleLogin = () => {
-    console.log('Login:', { email, password });
-    navigation.navigate('SignUpPage', { colorScheme });
+  const handleSignUp = () => {
+    console.log('Sign Up:', { email, password });
+    navigation.navigate('LoginPage', { colorScheme });
   };
 
   const styles = createStyles(colorScheme);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cyberpunk RED Login</Text>
+      <Text style={styles.title}>Cyberpunk RED Sign Up</Text>
       <TextInput
         style={styles.input}
         onChangeText={setEmail}
@@ -47,8 +48,16 @@ const LoginPage: React.FC<LoginPageProps> = ({ colorScheme }) => {
         secureTextEntry={true}
         placeholderTextColor={colorScheme === 'dark' ? '#FFF' : '#000'}
       />
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Login</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={setConfirmPassword}
+        value={confirmPassword}
+        placeholder="Confirm Password"
+        secureTextEntry={true}
+        placeholderTextColor={colorScheme === 'dark' ? '#FFF' : '#000'}
+      />
+      <TouchableOpacity style={styles.loginButton} onPress={handleSignUp}>
+        <Text style={styles.loginButtonText}>Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
@@ -91,4 +100,4 @@ const createStyles = (colorScheme: 'light' | 'dark') =>
     },
   });
 
-export default LoginPage;
+export default SignUpPage;
