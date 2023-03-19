@@ -19,11 +19,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ colorScheme }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'SignUpPage'>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'LoginPage'>>();
 
   const handleLogin = () => {
     console.log('Login:', { email, password });
-    navigation.navigate('SignUpPage', { colorScheme });
+    navigation.navigate('CatalogPage', { colorScheme });
   };
 
   const styles = createStyles(colorScheme);
@@ -49,6 +49,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ colorScheme }) => {
       />
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('SignUpPage', { colorScheme })}>
+        <Text style={styles.signUpButtonText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
@@ -88,6 +91,14 @@ const createStyles = (colorScheme: 'light' | 'dark') =>
       fontSize: 18,
       fontWeight: 'bold',
       color: '#FFF',
+    },
+    signUpButton: {
+      marginTop: 8,
+    },
+    signUpButtonText: {
+      fontSize: 14,
+      fontWeight: 'bold',
+      color: colorScheme === 'dark' ? '#FF5555' : '#FF0000',
     },
   });
 

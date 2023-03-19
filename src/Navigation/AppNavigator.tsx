@@ -3,10 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import LoginPage, { LoginPageProps } from '../../src/Pages/LoginPage';
 import SignUpPage, { SignUpPageProps } from '../../src/Pages/SignUpPage';
+import CatalogPage, { CatalogPageProps } from '../../src/Pages/CatalogPage';
 
 export type RootStackParamList = {
   LoginPage: LoginPageProps;
   SignUpPage: SignUpPageProps;
+  CatalogPage: CatalogPageProps;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -41,6 +43,11 @@ function AppNavigator({ colorScheme }: AppNavigatorProps) {
         <Stack.Screen
           name="SignUpPage"
           children={(props) => <SignUpPage colorScheme={colorScheme} {...props} />}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CatalogPage"
+          children={(props) => <CatalogPage colorScheme={colorScheme} {...props} />}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
