@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { Provider } from 'react-redux';
+import Store from './src/Store/Store';
 import LoginPage from './src/Pages/LoginPage';
 
 function App(): JSX.Element {
@@ -10,6 +12,7 @@ function App(): JSX.Element {
   };
 
   return (
+    <Provider store={Store}>
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
       <LoginPage colorScheme={colorScheme} />
@@ -17,6 +20,7 @@ function App(): JSX.Element {
         <Text style={styles.toggleButtonText}>Toggle {colorScheme === 'light' ? 'Dark' : 'Light'} Mode</Text>
       </TouchableOpacity>
     </SafeAreaView>
+    </Provider>
   );
 }
 
